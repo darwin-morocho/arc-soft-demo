@@ -21,7 +21,12 @@ class BiometricAuthView(activity: Activity): PlatformView, ViewTreeObserver.OnGl
         TODO("Not yet implemented")
     }
 
-    // Override from ViewTreeObserver.OnGlobalLayoutListener
+
+    /**
+     * Override from ViewTreeObserver.OnGlobalLayoutListener
+     * Called when the global layout state or the visibility of views within the view tree changes.
+     * Here you can get the dimensions of the view after layout is complete.
+     */
     override fun onGlobalLayout() {
         TODO("Not yet implemented")
     }
