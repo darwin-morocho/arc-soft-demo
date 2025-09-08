@@ -24,10 +24,17 @@ android {
         applicationId = "fit.codergym.arc_soft_demo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+    }
+
+    sourceSets {
+        getByName("main") {
+            // Make sure the app can find the C++ headers during compilation.
+            jniLibs.srcDir("libs")
+        }
     }
 
     buildTypes {
@@ -51,6 +58,6 @@ flutter {
 }
 
 dependencies {
-
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("com.github.darwin-morocho:camera2-builder:v0.0.1")
 }
