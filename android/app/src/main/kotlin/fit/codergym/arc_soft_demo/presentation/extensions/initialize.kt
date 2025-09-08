@@ -60,10 +60,27 @@ fun BiometricAuthView.initialize() {
                 return@setOnFrameListener
             }
 
-            faceRectView.setFaceDetectionState(FaceDetectionState.GoodFace)
-
             val isEnrolling = enrollUserId != null
 
+            if (!faceInfo.isAcceptableAngles(isEnrolling)) {
+                faceRectView.setFaceDetectionState(FaceDetectionState.BadAngle)
+                return@setOnFrameListener
+            }
+
+            val quality = faceDetector.getImageQuality(
+                nv21 = nv21,
+                width = size.width,
+                height = size.height,
+                faceInfo = faceInfo
+            )
+
+            if(quality<0.6){
+                faceRectView.setFaceDetectionState(FaceDetectionState.BadQuality)
+                return@setOnFrameListener
+            }
+
+            faceRectView.setFaceDetectionState(FaceDetectionState.GoodFace)
+            
             val feature = faceDetector.extractFaceFeature(
                 nv21 = nv21,
                 width = size.width,
