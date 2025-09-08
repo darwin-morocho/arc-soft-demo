@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'biometric_auth_controller.dart';
-import 'widgets/camera_preview.dart';
+import 'widgets/biometric_auth_view.dart';
 
 class BiometricAuthScreen extends HookWidget {
   const BiometricAuthScreen({super.key});
@@ -22,7 +22,7 @@ class BiometricAuthScreen extends HookWidget {
           child: Column(
             children: [
               SizedBox(height: 20),
-              CameraPreview(),
+              BiometricAuthView(),
               SizedBox(height: 20),
             ],
           ),

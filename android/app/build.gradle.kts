@@ -42,3 +42,7 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation("com.github.darwin-morocho:camera2-builder:v0.0.1")
+}

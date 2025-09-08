@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CameraPreview extends StatelessWidget {
-  const CameraPreview({super.key});
+class BiometricAuthView extends StatelessWidget {
+  const BiometricAuthView({super.key});
 
   @override
   Widget build(BuildContext context) {
