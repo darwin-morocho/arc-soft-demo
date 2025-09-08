@@ -8,4 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <fit.codergym.arc_soft_demo.presentation.FaceRectView
+        android:id="@+id/face_rect_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </FrameLayout>

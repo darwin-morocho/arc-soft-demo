@@ -13,7 +13,7 @@ final _eventChannel = EventChannel('biometric_auth_events');
 
 class BiometricAuthController {
   final _connectionStatus = BehaviorSubject.seeded(BiometricConnectionStatus.initializing);
-  final _biometricStatus = BehaviorSubject<BiometricStatus>();
+  final _biometricStatus = BehaviorSubject<BiometricStatus>.seeded(BiometricNotInitialized());
 
   Stream<BiometricConnectionStatus> get connectionStatus => _connectionStatus.stream;
   BiometricConnectionStatus get currentConnectionStatus => _connectionStatus.value;
@@ -25,7 +25,21 @@ class BiometricAuthController {
 
   /// Start listening to biometric status updates from the native side
   void _startListening() {
-    _eventSubscription = _eventChannel.receiveBroadcastStream().listen((event) {});
+    _eventSubscription = _eventChannel.receiveBroadcastStream().listen((event) {
+      final json = Map<String, dynamic>.from(event);
+      final eventName = json['event'] as String?;
+      if (eventName == null) {
+        return;
+      }
+
+      switch (eventName) {
+        case 'onFaceRecognized':
+          final userId = json['userId'] as String?;
+          if (userId != null) {
+            _biometricStatus.add(BiometricAuthenticated(userId: userId));
+          }
+      }
+    });
   }
 
   /// Initialize biometric authentication
@@ -34,6 +48,8 @@ class BiometricAuthController {
       final result = await _methodChannel.invokeMethod<bool>('initialize');
       if (result == true) {
         _connectionStatus.add(BiometricConnectionStatus.ready);
+        _biometricStatus.add(BiometricAuthenticating());
+        _startListening();
       } else {
         _connectionStatus.add(BiometricConnectionStatus.failed);
       }
@@ -53,7 +69,12 @@ class BiometricAuthController {
   /// Enroll a new biometric template for the given user ID
   Future<Uint8List?> enroll(String userId) async {
     try {
+      _biometricStatus.add(BiometricEnrolling(userId: userId));
       final result = await _methodChannel.invokeMethod<Uint8List>('enroll', {'userId': userId});
+
+      if (result != null) {
+        _biometricStatus.add(BiometricEnrolled(userId: userId));
+      }
       return result;
     } on PlatformException {
       log('Failed to enroll biometric', level: 900);
@@ -63,7 +84,8 @@ class BiometricAuthController {
 
   Future<void> resumeRecognition() async {
     try {
-      await _methodChannel.invokeMethod('resumeRecognition');
+      await _methodChannel.invokeMethod('resumeRecognition', {});
+      _biometricStatus.add(BiometricAuthenticating());
     } on PlatformException {
       log('Failed to resume recognition', level: 900);
     }

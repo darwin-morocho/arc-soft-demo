@@ -59,5 +59,5 @@ flutter {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("com.github.darwin-morocho:camera2-builder:v0.0.1")
+    implementation("com.github.darwin-morocho:camera2-builder:v0.0.3")
 }

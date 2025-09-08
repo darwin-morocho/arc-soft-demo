@@ -3,10 +3,16 @@ package fit.codergym.arc_soft_demo.presentation
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 
-class MainActivity : FlutterActivity(){
+class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-//        flutterEngine.platformViewsController.registry.registerViewFactory
+        flutterEngine.platformViewsController.registry.registerViewFactory(
+            "biometric_auth_view",
+            BiometricAuthViewFactory(
+                activity = this,
+                binaryMessenger = flutterEngine.dartExecutor.binaryMessenger
+            )
+        )
     }
 }
