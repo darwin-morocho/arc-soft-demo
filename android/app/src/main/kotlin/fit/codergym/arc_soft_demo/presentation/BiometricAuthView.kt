@@ -3,9 +3,18 @@ package fit.codergym.arc_soft_demo.presentation
 import android.app.Activity
 import android.view.View
 import android.view.ViewTreeObserver
+import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformView
 
-class BiometricAuthView(activity: Activity): PlatformView, ViewTreeObserver.OnGlobalLayoutListener {
+class BiometricAuthView(
+    activity: Activity,
+    val appId: String,
+    val sdkKey: String,
+    val activeKey: String,
+    val rgbCameraId: String,
+    val irCameraId: String,
+    val binaryMessenger: BinaryMessenger,
+) : PlatformView, ViewTreeObserver.OnGlobalLayoutListener {
 
     init {
         val inflater = activity.layoutInflater

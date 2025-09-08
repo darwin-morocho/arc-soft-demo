@@ -49,10 +49,10 @@ class FaceDetector(private val activity: Activity, private val livenessType: Liv
      * @return True if initialization is successful, false otherwise.
      * @throws Error if the SDK is not activated.
      */
-    suspend fun init(): Boolean = withContext(Dispatchers.IO) {
+    fun init(): Boolean {
         if (!SDK.isSdkActivated) {
             Log.e(TAG, "❌ SDK is not activated")
-            return@withContext false
+            return false
         }
 
         engine = engine ?: FaceEngine()
@@ -73,8 +73,7 @@ class FaceDetector(private val activity: Activity, private val livenessType: Liv
         )
 
         isEngineInitialized = frCode == ErrorInfo.MOK
-
-        return@withContext isEngineInitialized
+        return isEngineInitialized
     }
 
 
