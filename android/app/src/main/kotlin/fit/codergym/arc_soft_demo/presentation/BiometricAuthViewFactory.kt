@@ -1,4 +1,4 @@
-package fit.codergym.arc_soft_demo
+package fit.codergym.arc_soft_demo.presentation
 
 import android.app.Activity
 import android.content.Context

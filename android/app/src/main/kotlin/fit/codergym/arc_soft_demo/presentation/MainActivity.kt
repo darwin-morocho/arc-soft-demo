@@ -1,4 +1,4 @@
-package fit.codergym.arc_soft_demo
+package fit.codergym.arc_soft_demo.presentation
 
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
