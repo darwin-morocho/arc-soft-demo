@@ -8,10 +8,9 @@ void main() async {
 
   // Permission requests must implement better handling in a production app
   // this is just for demo purposes, you should check the permission status
-  // before interact with camera, phone or storage
+  // before interact with camera or phone
   await Permission.camera.request();
   await Permission.phone.request();
-  await Permission.storage.request();
 
   runApp(const MyApp());
 }
